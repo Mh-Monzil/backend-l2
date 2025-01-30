@@ -1,12 +1,15 @@
 import { Request, Response } from 'express';
 import { StudentService } from './student.service';
+import studentValidationSchema from './student.validation';
 
 const createStudent = async (req: Request, res: Response) => {
   try {
-    const { student } = req.body;
+    const { student: studentData } = req.body;
+
+    const zodParsedData = studentValidationSchema.parse(studentData);
 
     // will call service to send this data
-    const result = await StudentService.createStudentInDB(student);
+    const result = await StudentService.createStudentInDB(zodParsedData);
 
     //send response
     res.status(200).send({
@@ -15,7 +18,11 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: 'Something went wrong',
+      error,
+    });
   }
 };
 
@@ -28,7 +35,11 @@ const getAllStudents = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).send({
+      success: true,
+      message: 'Student retrieved successfully',
+      data: error,
+    });
   }
 };
 
@@ -42,7 +53,11 @@ const getSingleStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).send({
+      success: true,
+      message: 'Student retrieved successfully',
+      data: error,
+    });
   }
 };
 
