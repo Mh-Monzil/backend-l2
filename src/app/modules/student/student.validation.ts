@@ -45,6 +45,7 @@ const studentValidationSchema = z.object({
       'Gender is required. Please specify the gender.',
     ),
   email: z.string().email('A valid email is required.'),
+  password: z.string().min(1, 'Password is required.'),
   dateOfBirth: z.string().optional(),
   contactNo: z.string().min(1, 'Contact number is required.'),
   emergencyContactNo: z
@@ -65,6 +66,7 @@ const studentValidationSchema = z.object({
   localGuardian: localGuardianValidationSchema,
   profileImage: z.string().url('Profile image must be a valid URL.').optional(),
   isActive: z.boolean().default(true),
+  isDeleted: z.boolean().default(false),
 });
 
 export default studentValidationSchema;

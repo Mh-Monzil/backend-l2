@@ -25,6 +25,7 @@ export type Student = {
   name: Username;
   gender: 'male' | 'female' | 'other';
   email: string;
+  password: string;
   dateOfBirth?: string;
   contactNo: string;
   emergencyContactNo: string;
@@ -35,4 +36,5 @@ export type Student = {
   localGuardian: LocalGuardian;
   profileImage?: string;
   isActive: boolean;
+  isDeleted: boolean;
 };
