@@ -32,41 +32,47 @@ const localGuardianValidationSchema = z.object({
 
 // Define Zod ValidationSchema for the Student model
 
-const studentValidationSchema = z.object({
-  id: z.string().min(1, 'Student ID is required.'),
-  name: userNameValidationSchema,
-  gender: z
-    .enum(['male', 'female', 'other'], {
-      invalid_type_error:
-        "Invalid gender value. Allowed values are: 'male', 'female', 'other'.",
-    })
-    .refine(
-      (val) => ['male', 'female', 'other'].includes(val),
-      'Gender is required. Please specify the gender.',
-    ),
-  email: z.string().email('A valid email is required.'),
-  password: z.string().min(1, 'Password is required.'),
-  dateOfBirth: z.string().optional(),
-  contactNo: z.string().min(1, 'Contact number is required.'),
-  emergencyContactNo: z
-    .string()
-    .min(1, 'Emergency contact number is required.'),
-  bloodGroup: z
-    .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-    .optional()
-    .refine(
-      (val) =>
-        !val ||
-        ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].includes(val),
-      "Invalid blood group value. Allowed values are: 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'.",
-    ),
-  presentAddress: z.string().min(1, 'Present address is required.'),
-  permanentAddress: z.string().min(1, 'Permanent address is required.'),
-  guardian: guardianValidationSchema,
-  localGuardian: localGuardianValidationSchema,
-  profileImage: z.string().url('Profile image must be a valid URL.').optional(),
-  isActive: z.boolean().default(true),
-  isDeleted: z.boolean().default(false),
+const createStudentValidationSchema = z.object({
+  body: z.object({
+    password: z.string().max(20),
+    student: z.object({
+      name: userNameValidationSchema,
+      gender: z
+        .enum(['male', 'female', 'other'], {
+          invalid_type_error:
+            "Invalid gender value. Allowed values are: 'male', 'female', 'other'.",
+        })
+        .refine(
+          (val) => ['male', 'female', 'other'].includes(val),
+          'Gender is required. Please specify the gender.',
+        ),
+      email: z.string().email('A valid email is required.'),
+      dateOfBirth: z.date().optional(),
+      contactNo: z.string().min(1, 'Contact number is required.'),
+      emergencyContactNo: z
+        .string()
+        .min(1, 'Emergency contact number is required.'),
+      bloodGroup: z
+        .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        .optional()
+        .refine(
+          (val) =>
+            !val ||
+            ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].includes(val),
+          "Invalid blood group value. Allowed values are: 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'.",
+        ),
+      presentAddress: z.string().min(1, 'Present address is required.'),
+      permanentAddress: z.string().min(1, 'Permanent address is required.'),
+      guardian: guardianValidationSchema,
+      localGuardian: localGuardianValidationSchema,
+      profileImage: z
+        .string()
+        .url('Profile image must be a valid URL.')
+        .optional(),
+    }),
+  }),
 });
 
-export default studentValidationSchema;
+export const studentValidations = {
+  createStudentValidationSchema,
+};
