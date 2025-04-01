@@ -190,7 +190,7 @@ studentSchema.statics.isUserExists = async function (id: string) {
 };
 
 studentSchema.virtual('fullName').get(function (next) {
-  return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
+  return `${this?.name?.firstName} ${this?.name?.middleName} ${this?.name?.lastName}`;
 
   next();
 });
