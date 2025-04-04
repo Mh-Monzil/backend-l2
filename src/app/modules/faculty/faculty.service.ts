@@ -67,10 +67,10 @@ const deleteFacultyFromDb = async (id: string) => {
     session.endSession();
 
     return deleteFaculty;
-  } catch (err: any) {
+  } catch (error) {
     await session.commitTransaction();
     session.endSession();
-    throw new Error(err);
+    throw error;
   }
 };
 
