@@ -49,7 +49,7 @@ const deleteCourse = catchAsync(async (req, res) => {
   });
 });
 
-export const FacultyControllers = {
+export const courseControllers = {
   createCourse,
   getAllCourses,
   getSingleCourse,
