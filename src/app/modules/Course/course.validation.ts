@@ -19,6 +19,7 @@ const createCourseValidationSchema = z.object({
       invalid_type_error: 'Credits must be number',
       required_error: 'Credits is required',
     }),
+    isDeleted: z.boolean().optional(),
     preRequisiteCourses: z.array(PreRequisiteCourseValidationSchema).optional(),
   }),
 });
