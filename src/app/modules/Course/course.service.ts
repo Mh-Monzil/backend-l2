@@ -45,7 +45,7 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
   try {
     const { preRequisiteCourses, ...courseRemainingData } = payload;
 
-    //step1: basic course info update
+    //step1: course info update
     const updateBasicCourseInfo = await Course.findByIdAndUpdate(
       id,
       courseRemainingData,
